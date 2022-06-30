@@ -23,11 +23,6 @@ class _HomeScreenState extends State<HomeScreen> {
     setState(() => loading = false);
   }
 
-  _onRefresh() {
-    setState(() => loading = true);
-    getWeatherData();
-  }
-
   @override
   void initState() {
     getWeatherData();
@@ -60,61 +55,65 @@ class _HomeScreenState extends State<HomeScreen> {
         : DefaultTabController(
             length: 2,
             child: Scaffold(
-              extendBodyBehindAppBar: true,
-              body: Padding(
-                padding: const EdgeInsets.symmetric(
-                    horizontal: 20.0, vertical: 55.0),
-                child: Column(
-                  children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        CustomIconButton(
-                          child: const Icon(Icons.search, size: 30),
-                          onTap: () => Navigator.pushNamed(context, '/search'),
-                        ),
-                        CustomIconButton(
-                          onTap: _onRefresh,
-                          child: const Icon(Icons.refresh, size: 30),
-                        ),
-                        CustomIconButton(
-                          child: SvgPicture.asset(
-                            'assets/menu.svg',
-                            width: 30,
-                            color: Colors.white,
-                          ),
-                          onTap: () {},
-                        ),
-                      ],
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 36.0),
-                      child: Row(
-                        children: [
-                          currentIndex == 0
-                              ? const CustomDotIndicator(active: true)
-                              : const CustomDotIndicator(active: false),
-                          currentIndex == 1
-                              ? const CustomDotIndicator(active: true)
-                              : const CustomDotIndicator(active: false),
-                        ],
+              appBar: AppBar(
+                centerTitle: true,
+                elevation: 0.0,
+                backgroundColor: Colors.transparent,
+                title: const Text(
+                  'FIRE WEATHER',
+                  style: TextStyle(
+                    fontSize: 28,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                actions: [
+                  Padding(
+                    padding: const EdgeInsets.only(right: 20.0, top: 6.0),
+                    child: CustomIconButton(
+                      child: SvgPicture.asset(
+                        'assets/menu.svg',
+                        width: 30,
+                        color: Colors.white,
                       ),
+                      onTap: () => Navigator.pushNamed(context, '/cities'),
                     ),
-                    Expanded(
-                      child: PageView(
-                        onPageChanged: (index) =>
-                            setState(() => currentIndex = index),
-                        children: [
-                          CustomPageViewContainer(
-                            weatherResponse: response,
-                          ),
-                          CustomPageViewContainer(
-                            weatherResponse: response1,
-                          ),
-                        ],
+                  ),
+                ],
+              ),
+              body: SafeArea(
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                  child: Column(
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 36.0),
+                        child: Row(
+                          children: [
+                            currentIndex == 0
+                                ? const CustomDotIndicator(active: true)
+                                : const CustomDotIndicator(active: false),
+                            currentIndex == 1
+                                ? const CustomDotIndicator(active: true)
+                                : const CustomDotIndicator(active: false),
+                          ],
+                        ),
                       ),
-                    ),
-                  ],
+                      Expanded(
+                        child: PageView(
+                          onPageChanged: (index) =>
+                              setState(() => currentIndex = index),
+                          children: [
+                            CustomPageViewContainer(
+                              weatherResponse: response,
+                            ),
+                            CustomPageViewContainer(
+                              weatherResponse: response1,
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ),

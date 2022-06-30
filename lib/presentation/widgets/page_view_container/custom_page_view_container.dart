@@ -66,7 +66,7 @@ class CustomPageViewContainer extends StatelessWidget {
         ),
         Column(
           children: [
-            const Divider(),
+            const Divider(color: Colors.grey),
             const SizedBox(height: 16),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
