@@ -1,19 +1,27 @@
 import 'package:flutter/material.dart';
 import 'package:weather_app/data/data.dart';
+import 'package:weather_app/presentation/presentation.dart';
 
-class CitiesScreen extends StatelessWidget {
+class CitiesScreen extends StatefulWidget {
   const CitiesScreen({Key? key}) : super(key: key);
 
   @override
+  State<CitiesScreen> createState() => _CitiesScreenState();
+}
+
+class _CitiesScreenState extends State<CitiesScreen> {
+  TextEditingController controller = TextEditingController();
+  List<WeatherResponse> cities = [];
+
+  Future<void> _getWeatherData(String city) async {
+    WeatherService service = WeatherService();
+    WeatherResponse response = await service.getWeather(city);
+    debugPrint(response.cityName);
+    setState(() => cities.add(response));
+  }
+
+  @override
   Widget build(BuildContext context) {
-    TextEditingController controller = TextEditingController();
-
-    Future<void> _getWeatherData(String city) async {
-      WeatherService service = WeatherService();
-      WeatherResponse response = await service.getWeather(city);
-      debugPrint(response.tempInfo.temperature.toString());
-    }
-
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
@@ -53,50 +61,10 @@ class CitiesScreen extends StatelessWidget {
               ),
             ),
             Expanded(
-              child: ListView(
-                children: [
-                  Container(
-                    height: 120,
-                    margin: const EdgeInsets.symmetric(vertical: 20.0),
-                    padding: const EdgeInsets.all(10.0),
-                    decoration: BoxDecoration(
-                      color: Colors.grey.shade900,
-                      borderRadius: BorderRadius.circular(15.0),
-                    ),
-                    child: Row(
-                      children: [
-                        Expanded(
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: const [
-                              Text(
-                                'Cairo',
-                                style: TextStyle(
-                                  fontSize: 30,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                              Text(
-                                'Sunny',
-                                style: TextStyle(
-                                  fontSize: 20,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                        const Text(
-                          '31°',
-                          style: TextStyle(
-                            fontSize: 30,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ],
+              child: ListView.builder(
+                itemCount: cities.length,
+                itemBuilder: (BuildContext context, int index) =>
+                    CustomWeatherCard(response: cities[index]),
               ),
             ),
           ],
