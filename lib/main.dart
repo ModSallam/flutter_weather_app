@@ -14,7 +14,10 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Weather App',
       theme: ThemeData(
-        primarySwatch: Colors.blue,
+        primarySwatch: Colors.amber,
+        brightness: Brightness.dark,
+        fontFamily: 'futura',
+        scaffoldBackgroundColor: Colors.black,
       ),
       onGenerateRoute: AppRouter.onGenerateRoute,
     );
