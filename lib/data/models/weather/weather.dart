@@ -23,6 +23,26 @@ class WeatherResponse {
       weatherInfo: WeatherInfo.fromJson(json['weather'][0]),
     );
   }
+
+  Map<String, dynamic> toMap() {
+    final result = <String, dynamic>{};
+
+    result.addAll({'cityName': cityName});
+    result.addAll({'windSpeed': windSpeed});
+    result.addAll({'tempInfo': tempInfo.toMap()});
+    result.addAll({'weatherInfo': weatherInfo.toMap()});
+
+    return result;
+  }
+
+  factory WeatherResponse.fromMap(Map<String, dynamic> map) {
+    return WeatherResponse(
+      cityName: map['cityName'] ?? '',
+      windSpeed: map['windSpeed']?.toDouble() ?? 0.0,
+      tempInfo: TemperatureInfo.fromMap(map['tempInfo']),
+      weatherInfo: WeatherInfo.fromMap(map['weatherInfo']),
+    );
+  }
 }
 
 class TemperatureInfo {
@@ -35,6 +55,22 @@ class TemperatureInfo {
     return TemperatureInfo(
         temperature: json['temp'], humidity: json['humidity']);
   }
+
+  Map<String, dynamic> toMap() {
+    final result = <String, dynamic>{};
+
+    result.addAll({'temperature': temperature});
+    result.addAll({'humidity': humidity});
+
+    return result;
+  }
+
+  factory TemperatureInfo.fromMap(Map<String, dynamic> map) {
+    return TemperatureInfo(
+      temperature: map['temperature']?.toDouble() ?? 0.0,
+      humidity: map['humidity']?.toInt() ?? 0,
+    );
+  }
 }
 
 class WeatherInfo {
@@ -45,5 +81,21 @@ class WeatherInfo {
 
   factory WeatherInfo.fromJson(Map<String, dynamic> json) {
     return WeatherInfo(description: json['description'], icon: json['icon']);
+  }
+
+  Map<String, dynamic> toMap() {
+    final result = <String, dynamic>{};
+
+    result.addAll({'description': description});
+    result.addAll({'icon': icon});
+
+    return result;
+  }
+
+  factory WeatherInfo.fromMap(Map<String, dynamic> map) {
+    return WeatherInfo(
+      description: map['description'] ?? '',
+      icon: map['icon'] ?? '',
+    );
   }
 }

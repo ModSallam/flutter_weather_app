@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:weather_app/data/data.dart';
 
-class WeatherService {
+class WeatherRepository {
   Future<WeatherResponse> getWeather(String city) async {
     final queryParameters = {
       'q': city,
