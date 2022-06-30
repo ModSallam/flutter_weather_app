@@ -71,7 +71,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       children: [
                         CustomIconButton(
                           child: const Icon(Icons.search, size: 30),
-                          onTap: () {},
+                          onTap: () => Navigator.pushNamed(context, '/search'),
                         ),
                         CustomIconButton(
                           onTap: _onRefresh,

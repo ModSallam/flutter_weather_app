@@ -10,8 +10,10 @@ environment:
 
 dependencies:
   cupertino_icons: ^1.0.2
+  equatable: ^2.0.3
   flutter:
     sdk: flutter
+  flutter_bloc: ^8.0.1
   flutter_svg: ^1.1.1
   http: ^0.13.4
   intl: ^0.17.0

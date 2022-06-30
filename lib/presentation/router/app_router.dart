@@ -9,6 +9,10 @@ class AppRouter {
         return MaterialPageRoute(
           builder: (context) => const HomeScreen(),
         );
+        case '/search':
+        return MaterialPageRoute(
+          builder: (context) => const SearchScreen(),
+        );
       default:
         return MaterialPageRoute(
           builder: (context) => const ErrorScreen(),
